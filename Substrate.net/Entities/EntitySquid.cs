@@ -1,56 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace Substrate.Entities;
 
-namespace Substrate.Entities
+using Substrate.Nbt;
+
+public class EntitySquid : EntityMob
 {
-    using Substrate.Nbt;
-
-    public class EntitySquid : EntityMob
+    public static readonly SchemaNodeCompound SquidSchema = MobSchema.MergeInto(new SchemaNodeCompound("")
     {
-        public static readonly SchemaNodeCompound SquidSchema = MobSchema.MergeInto(new SchemaNodeCompound("")
-        {
-            new SchemaNodeString("id", TypeId),
-        });
+        new SchemaNodeString("id", TypeId),
+    });
 
-        public static new string TypeId
-        {
-            get { return "Squid"; }
-        }
+    public static new string TypeId => "Squid";
 
-        protected EntitySquid (string id)
-            : base(id)
-        {
-        }
-
-        public EntitySquid ()
-            : this(TypeId)
-        {
-        }
-
-        public EntitySquid (TypedEntity e)
-            : base(e)
-        {
-        }
-
-
-        #region INBTObject<Entity> Members
-
-        public override bool ValidateTree (TagNode tree)
-        {
-            return new NbtVerifier(tree, SquidSchema).Verify();
-        }
-
-        #endregion
-
-
-        #region ICopyable<Entity> Members
-
-        public override TypedEntity Copy ()
-        {
-            return new EntitySquid(this);
-        }
-
-        #endregion
+    protected EntitySquid(string id)
+        : base(id)
+    {
     }
+
+    public EntitySquid()
+        : this(TypeId)
+    {
+    }
+
+    public EntitySquid(TypedEntity e)
+        : base(e)
+    {
+    }
+
+
+    #region INBTObject<Entity> Members
+
+    public override bool ValidateTree(TagNode tree)
+    {
+        return new NbtVerifier(tree, SquidSchema).Verify();
+    }
+
+    #endregion
+
+
+    #region ICopyable<Entity> Members
+
+    public override TypedEntity Copy()
+    {
+        return new EntitySquid(this);
+    }
+
+    #endregion
 }
